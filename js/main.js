@@ -2,8 +2,10 @@
   var CONFIG = {
     spreadsheetId: "1x10iL4j4GBjGl2DuDv1Xe3sgUS-DLYL2eTPIJ65LAq4",
     sheets: {
-      productos: { sheet: "productos", gid: "" }, // Opcional: agrega el gid si lo necesitas.
-      servicios: { sheet: "servicios", gid: "" } // Opcional: agrega el gid si lo necesitas.
+      productos: { sheet: "productos", gid: "" },
+      servicios: { sheet: "servicios", gid: "" },
+      estaticos: { sheet: "estaticos", gid: "" },
+      galeria: { sheet: "galeria", gid: "" }
     }
   };
 
@@ -37,6 +39,13 @@
     };
   }
 
+  function normalizeStatic(raw) {
+    return {
+      imagen: pickField(raw, ["imagen", "image", "foto", "img"]) || "",
+      texto: pickField(raw, ["texto", "titulo", "label", "alt"]) || ""
+    };
+  }
+
   async function loadItems(type) {
     var sheetConfig = CONFIG.sheets[type === "producto" ? "productos" : "servicios"];
     try {
@@ -58,6 +67,51 @@
     }
   }
 
+  async function loadStatics() {
+    var sheetConfig = CONFIG.sheets.estaticos;
+    try {
+      var data = await window.Sheets.fetchSheetCSV({
+        spreadsheetId: CONFIG.spreadsheetId,
+        sheet: sheetConfig.sheet,
+        gid: sheetConfig.gid
+      });
+      return data.map(normalizeStatic);
+    } catch (err) {
+      try {
+        var res = await fetch("data/estaticos.json");
+        var json = await res.json();
+        return (json.items || []).map(normalizeStatic);
+      } catch (fallbackErr) {
+        return [];
+      }
+    }
+  }
+
+  async function loadGallery() {
+    var sheetConfig = CONFIG.sheets.galeria;
+    try {
+      var data = await window.Sheets.fetchSheetCSV({
+        spreadsheetId: CONFIG.spreadsheetId,
+        sheet: sheetConfig.sheet,
+        gid: sheetConfig.gid
+      });
+      return data.map(function (raw) {
+        return {
+          titulo: pickField(raw, ["titulo", "titulo", "title", "nombre"]) || "",
+          archivo: pickField(raw, ["archivo", "file", "url", "link", "media"]) || ""
+        };
+      });
+    } catch (err) {
+      try {
+        var res = await fetch("data/galeria.json");
+        var json = await res.json();
+        return json.items || [];
+      } catch (fallbackErr) {
+        return [];
+      }
+    }
+  }
+
   function parsePrice(value) {
     if (!value) {
       return NaN;
@@ -71,12 +125,21 @@
     if (!toggle) {
       return;
     }
+    var icon = toggle.querySelector("img");
+    var label = toggle.querySelector(".sr-only");
     var saved = localStorage.getItem("theme");
     var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     var initial = saved || (prefersDark ? "dark" : "light");
     document.documentElement.setAttribute("data-theme", initial);
     toggle.setAttribute("aria-pressed", initial === "dark" ? "true" : "false");
-    toggle.textContent = initial === "dark" ? "Modo claro" : "Modo oscuro";
+    var initialLabel = initial === "dark" ? "Modo claro" : "Modo oscuro";
+    toggle.setAttribute("aria-label", initialLabel);
+    if (label) {
+      label.textContent = initialLabel;
+    }
+    if (icon) {
+      icon.src = initial === "dark" ? "assets/img/icons/sun.svg" : "assets/img/icons/moon.svg";
+    }
 
     toggle.addEventListener("click", function () {
       var current = document.documentElement.getAttribute("data-theme");
@@ -84,7 +147,41 @@
       document.documentElement.setAttribute("data-theme", next);
       localStorage.setItem("theme", next);
       toggle.setAttribute("aria-pressed", next === "dark" ? "true" : "false");
-      toggle.textContent = next === "dark" ? "Modo claro" : "Modo oscuro";
+      var nextLabel = next === "dark" ? "Modo claro" : "Modo oscuro";
+      toggle.setAttribute("aria-label", nextLabel);
+      if (label) {
+        label.textContent = nextLabel;
+      }
+      if (icon) {
+        icon.src = next === "dark" ? "assets/img/icons/sun.svg" : "assets/img/icons/moon.svg";
+      }
+    });
+  }
+
+  function setupMobileNav() {
+    var toggle = document.querySelector("#nav-toggle");
+    var mobile = document.querySelector("#nav-mobile");
+    var closeBtn = document.querySelector("#nav-close");
+    if (!toggle || !mobile) {
+      return;
+    }
+    toggle.addEventListener("click", function () {
+      document.body.classList.toggle("nav-open");
+    });
+    if (closeBtn) {
+      closeBtn.addEventListener("click", function () {
+        document.body.classList.remove("nav-open");
+      });
+    }
+    mobile.addEventListener("click", function (event) {
+      if (event.target.tagName === "A") {
+        document.body.classList.remove("nav-open");
+      }
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        document.body.classList.remove("nav-open");
+      }
     });
   }
 
@@ -112,7 +209,7 @@
 
   function setupGeneralWhatsApp() {
     var generalMessage =
-      "Hola! Quiero reservar un turno para mi mascota. Estoy en Del Viso/Pilar. \u00bfQué disponibilidad tienen?";
+      "Hola! Quiero reservar un turno para mi mascota. Estoy en Del Viso/Pilar. ¿Qué disponibilidad tienen?";
     var links = document.querySelectorAll("[data-wa='general']");
     links.forEach(function (link) {
       link.href = window.UI.buildWhatsAppLink(generalMessage);
@@ -124,6 +221,7 @@
     var productsContainer = document.querySelector("#home-productos");
     var galleryContainer = document.querySelector("#home-galeria");
     var galleryFilters = document.querySelector("#home-galeria-filtros");
+    var staticsContainer = document.querySelector("#home-estaticos");
 
     if (!servicesContainer && !productsContainer) {
       return;
@@ -131,67 +229,47 @@
 
     var servicios = await loadItems("servicio");
     var productos = await loadItems("producto");
-    var galleryItems = servicios.concat(productos);
+    var galleryItems = await loadGallery();
 
     if (servicesContainer) {
-      window.UI.renderCards(servicesContainer, servicios.slice(0, 6), "servicio");
+      window.UI.renderCards(servicesContainer, servicios.slice(0, 3), "servicio");
     }
     if (productsContainer) {
-      window.UI.renderCards(productsContainer, productos.slice(0, 6), "producto");
+      window.UI.renderCards(productsContainer, productos.slice(0, 3), "producto");
     }
+
+    if (staticsContainer) {
+      var statics = await loadStatics();
+      staticsContainer.innerHTML = "";
+      statics
+        .filter(function (item) {
+          return item.imagen;
+        })
+        .slice(0, 4)
+        .forEach(function (item) {
+          var wrap = document.createElement("div");
+          wrap.className = "static-item";
+          var img = document.createElement("img");
+          img.loading = "lazy";
+          img.alt = item.texto || "Tomi Peluquería Canina";
+          img.src = item.imagen;
+          wrap.appendChild(img);
+          staticsContainer.appendChild(wrap);
+        });
+      if (!staticsContainer.children.length) {
+        staticsContainer.style.display = "none";
+      }
+    }
+
     if (galleryContainer) {
       var itemsWithImages = galleryItems.filter(function (item) {
-        return item.imagen;
+        return item.archivo;
       });
       if (galleryFilters) {
         if (!itemsWithImages.length) {
           galleryFilters.style.display = "none";
         } else {
-          var categories = Array.from(
-            new Set(
-              itemsWithImages
-                .map(function (item) {
-                  return item.categoria;
-                })
-                .filter(function (cat) {
-                  return cat;
-                })
-            )
-          );
-          var allButton = document.createElement("button");
-          allButton.type = "button";
-          allButton.className = "badge is-active";
-          allButton.textContent = "Todas";
-          galleryFilters.appendChild(allButton);
-          var buttons = [allButton];
-
-          categories.forEach(function (cat) {
-            var btn = document.createElement("button");
-            btn.type = "button";
-            btn.className = "badge";
-            btn.textContent = cat;
-            btn.dataset.category = cat;
-            galleryFilters.appendChild(btn);
-            buttons.push(btn);
-          });
-
-          galleryFilters.addEventListener("click", function (event) {
-            if (event.target.tagName !== "BUTTON") {
-              return;
-            }
-            buttons.forEach(function (btn) {
-              btn.classList.remove("is-active");
-            });
-            event.target.classList.add("is-active");
-            var category = event.target.dataset.category;
-            var filtered = category
-              ? itemsWithImages.filter(function (item) {
-                  return item.categoria === category;
-                })
-              : itemsWithImages;
-            window.UI.renderGallery(galleryContainer, filtered);
-            setupReveal();
-          });
+          galleryFilters.style.display = "none";
         }
       }
       window.UI.renderGallery(galleryContainer, galleryItems);
@@ -307,6 +385,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     setupThemeToggle();
+    setupMobileNav();
     setupGeneralWhatsApp();
     var page = document.body.getAttribute("data-page");
     if (page === "home") {

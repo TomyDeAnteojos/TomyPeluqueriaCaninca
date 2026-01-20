@@ -1,0 +1,16 @@
+﻿{
+  "items": [
+    {
+      "titulo": "Detalle salon",
+      "archivo": "assets/img/og-cover.jpg"
+    },
+    {
+      "titulo": "Look premium",
+      "archivo": "assets/img/og-cover.jpg"
+    },
+    {
+      "titulo": "Mascota feliz",
+      "archivo": "assets/img/og-cover.jpg"
+    }
+  ]
+}

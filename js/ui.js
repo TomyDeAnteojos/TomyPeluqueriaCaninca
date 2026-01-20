@@ -4,8 +4,25 @@
     return base + encodeURIComponent(text);
   }
 
-  function createPlaceholder(name) {
+  function createPlaceholder() {
     return "assets/img/og-cover.jpg";
+  }
+
+  function buildTag(label, icon) {
+    var tag = document.createElement("span");
+    tag.className = "tag";
+    if (icon) {
+      var img = document.createElement("img");
+      img.className = "tag-icon";
+      img.src = icon;
+      img.alt = "";
+      img.setAttribute("aria-hidden", "true");
+      tag.appendChild(img);
+    }
+    var text = document.createElement("span");
+    text.textContent = label;
+    tag.appendChild(text);
+    return tag;
   }
 
   function buildCard(item, type, layout) {
@@ -18,51 +35,54 @@
     var img = document.createElement("img");
     img.loading = "lazy";
     img.alt = item.nombre ? item.nombre : "Tomi Peluquería Canina";
-    img.src = item.imagen ? item.imagen : createPlaceholder(item.nombre);
+    img.src = item.imagen ? item.imagen : createPlaceholder();
     card.appendChild(img);
+
+    var body = document.createElement("div");
+
+    var header = document.createElement("div");
+    header.className = "card-header";
 
     var title = document.createElement("h3");
     title.className = "card-title";
-    title.textContent = item.nombre || "Servicio";
-    card.appendChild(title);
-
-    if (item.descripcion) {
-      var desc = document.createElement("p");
-      desc.textContent = item.descripcion;
-      card.appendChild(desc);
-    }
+    title.textContent = item.nombre || (type === "producto" ? "Producto" : "Servicio");
+    header.appendChild(title);
 
     if (item.precio) {
       var price = document.createElement("div");
       price.className = "card-price";
       price.textContent = item.precio;
-      card.appendChild(price);
+      header.appendChild(price);
+    }
+
+    body.appendChild(header);
+
+    if (item.descripcion && type !== "servicio") {
+      var desc = document.createElement("p");
+      desc.className = "card-desc";
+      desc.textContent = item.descripcion;
+      body.appendChild(desc);
     }
 
     var tags = document.createElement("div");
     tags.className = "card-tags";
-    if (item.categoria) {
-      var cat = document.createElement("span");
-      cat.textContent = item.categoria;
-      tags.appendChild(cat);
-    }
     if (item.duracion) {
-      var dur = document.createElement("span");
-      dur.textContent = item.duracion;
-      tags.appendChild(dur);
+      tags.appendChild(buildTag(item.duracion, "assets/img/icons/clock.svg"));
     }
     if (tags.children.length) {
-      card.appendChild(tags);
+      body.appendChild(tags);
     }
+
+    card.appendChild(body);
 
     var message = "Hola! Quiero consultar por el " + (type === "producto" ? "producto" : "servicio") + ": " + (item.nombre || "");
     if (item.precio) {
       message += ". Precio: " + item.precio;
     }
     if (type === "servicio") {
-      message += ". Mi mascota es {tama\u00f1o(opcional)}.";
+      message += ". Mi mascota es {tamaño(opcional)}.";
     } else {
-      message += ". \u00bfPrecio y disponibilidad?";
+      message += ". ¿Precio y disponibilidad?";
     }
     message += " " + window.location.href;
 
@@ -71,7 +91,7 @@
     cta.href = buildWhatsAppLink(message);
     cta.target = "_blank";
     cta.rel = "noopener";
-    cta.textContent = "Consultar por WhatsApp";
+    cta.textContent = "WhatsApp";
     card.appendChild(cta);
 
     return card;
@@ -92,20 +112,40 @@
     });
   }
 
+  function extractYouTubeId(url) {
+    try {
+      var parsed = new URL(url);
+      if (parsed.hostname.indexOf("youtu.be") !== -1) {
+        return parsed.pathname.replace("/", "").split("?")[0];
+      }
+      var id = parsed.searchParams.get("v");
+      if (id) {
+        return id;
+      }
+      if (parsed.pathname.indexOf("/embed/") !== -1) {
+        return parsed.pathname.split("/embed/")[1].split("/")[0];
+      }
+      return "";
+    } catch (err) {
+      var match = url.match(/(?:v=|youtu\.be\/|embed\/)([\w-]+)/i);
+      return match && match[1] ? match[1] : "";
+    }
+  }
+
   function renderGallery(container, items) {
     container.innerHTML = "";
     var galleryItems = items.filter(function (item) {
-      return item.imagen;
+      return item.archivo;
     });
     if (!galleryItems.length) {
       for (var i = 0; i < 6; i++) {
         var placeholder = document.createElement("div");
         placeholder.className = "gallery-item reveal";
-        var img = document.createElement("img");
-        img.loading = "lazy";
-        img.alt = "Galería Tomi Peluquería Canina";
-        img.src = "assets/img/og-cover.jpg";
-        placeholder.appendChild(img);
+        var placeholderImg = document.createElement("img");
+        placeholderImg.loading = "lazy";
+        placeholderImg.alt = "Galería Tomi Peluquería Canina";
+        placeholderImg.src = "assets/img/og-cover.jpg";
+        placeholder.appendChild(placeholderImg);
         container.appendChild(placeholder);
       }
       return;
@@ -114,11 +154,58 @@
     galleryItems.slice(0, 9).forEach(function (item) {
       var wrap = document.createElement("div");
       wrap.className = "gallery-item reveal";
-      var img = document.createElement("img");
-      img.loading = "lazy";
-      img.alt = item.nombre || "Galería Tomi Peluquería Canina";
-      img.src = item.imagen;
-      wrap.appendChild(img);
+      var source = item.archivo;
+      var title = item.titulo || "Galería Tomi Peluquería Canina";
+      var isVideo = /\.(mp4|webm|ogg)$/i.test(source);
+      var isYouTube = /(?:youtube\.com|youtu\.be)/i.test(source);
+      var isInstagram = /instagram\.com/i.test(source);
+
+      if (isYouTube) {
+        var videoId = extractYouTubeId(source);
+        if (videoId) {
+          var iframe = document.createElement("iframe");
+          iframe.src = "https://www.youtube.com/embed/" + videoId;
+          iframe.title = title;
+          iframe.loading = "lazy";
+          iframe.allow =
+            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+          iframe.allowFullscreen = true;
+          wrap.appendChild(iframe);
+        }
+      } else if (isInstagram) {
+        var block = document.createElement("blockquote");
+        block.className = "instagram-media";
+        block.setAttribute("data-instgrm-permalink", source);
+        block.setAttribute("data-instgrm-captioned", "");
+        var link = document.createElement("a");
+        link.href = source;
+        link.textContent = title;
+        block.appendChild(link);
+        wrap.appendChild(block);
+        if (!document.querySelector("script[src*='instagram.com/embed.js']")) {
+          var script = document.createElement("script");
+          script.async = true;
+          script.src = "https://www.instagram.com/embed.js";
+          document.body.appendChild(script);
+        } else if (window.instgrm && window.instgrm.Embeds) {
+          window.instgrm.Embeds.process();
+        }
+      } else if (isVideo) {
+        var video = document.createElement("video");
+        video.src = source;
+        video.controls = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.preload = "metadata";
+        video.setAttribute("title", title);
+        wrap.appendChild(video);
+      } else {
+        var img = document.createElement("img");
+        img.loading = "lazy";
+        img.alt = title;
+        img.src = source;
+        wrap.appendChild(img);
+      }
       container.appendChild(wrap);
     });
   }

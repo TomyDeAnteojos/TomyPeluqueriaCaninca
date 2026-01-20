@@ -1,0 +1,16 @@
+﻿{
+  "items": [
+    {
+      "imagen": "assets/img/og-cover.jpg",
+      "texto": "Detalle 1"
+    },
+    {
+      "imagen": "assets/img/og-cover.jpg",
+      "texto": "Detalle 2"
+    },
+    {
+      "imagen": "assets/img/og-cover.jpg",
+      "texto": "Detalle 3"
+    }
+  ]
+}

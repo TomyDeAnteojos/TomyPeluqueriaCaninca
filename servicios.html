@@ -27,15 +27,31 @@
         <img src="assets/img/logo.svg" alt="Tomi Peluquería Canina" width="180" height="48" />
       </a>
       <nav class="nav-links" aria-label="Principal">
-        <a href="index.html">Inicio</a>
-        <a href="servicios.html">Servicios</a>
-        <a href="catalogo.html">Catálogo</a>
-        <a href="como-reservar.html">Cómo reservar</a>
-        <a href="index.html#ubicacion">Ubicación</a>
+        <a class="icon-link" href="index.html" aria-label="Inicio"><img src="assets/img/icons/home.svg" alt="" aria-hidden="true" /></a>
+        <a class="icon-link" href="servicios.html" aria-label="Servicios"><img src="assets/img/icons/scissors.svg" alt="" aria-hidden="true" /></a>
+        <a class="icon-link" href="catalogo.html" aria-label="Catálogo"><img src="assets/img/icons/catalog.svg" alt="" aria-hidden="true" /></a>
+        <a class="icon-link" href="como-reservar.html" aria-label="Reservar"><img src="assets/img/icons/chat.svg" alt="" aria-hidden="true" /></a>
+        <a class="icon-link" href="index.html#ubicacion" aria-label="Ubicación"><img src="assets/img/icons/map.svg" alt="" aria-hidden="true" /></a>
       </nav>
       <div class="nav-cta">
-        <button class="toggle" id="theme-toggle" type="button">Modo oscuro</button>
-        <a class="btn btn-primary" data-wa="general" href="#">Reservar por WhatsApp</a>
+        <button class="toggle icon-btn" id="theme-toggle" type="button" aria-label="Modo oscuro"><img src="assets/img/icons/moon.svg" alt="" aria-hidden="true" /><span class="sr-only">Modo oscuro</span></button>
+        <a class="icon-btn" data-wa="general" href="#" aria-label="WhatsApp"><img src="assets/img/icons/whatsapp.svg" alt="" aria-hidden="true" /></a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Abrir menú">☰</button>
+      </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile" aria-label="Menú móvil">
+      <div class="container">
+        <div class="nav-mobile-header">
+          <span class="sr-only">Menú</span>
+          <button class="nav-close" id="nav-close" type="button" aria-label="Cerrar menú">✕</button>
+        </div>
+        <ul>
+          <li><a class="icon-link" href="index.html"><img src="assets/img/icons/home.svg" alt="" aria-hidden="true" /><span class="sr-only">Inicio</span></a></li>
+          <li><a class="icon-link" href="servicios.html"><img src="assets/img/icons/scissors.svg" alt="" aria-hidden="true" /><span class="sr-only">Servicios</span></a></li>
+          <li><a class="icon-link" href="catalogo.html"><img src="assets/img/icons/catalog.svg" alt="" aria-hidden="true" /><span class="sr-only">Catálogo</span></a></li>
+          <li><a class="icon-link" href="como-reservar.html"><img src="assets/img/icons/chat.svg" alt="" aria-hidden="true" /><span class="sr-only">Reservar</span></a></li>
+          <li><a class="icon-link" href="index.html#ubicacion"><img src="assets/img/icons/map.svg" alt="" aria-hidden="true" /><span class="sr-only">Ubicación</span></a></li>
+        </ul>
       </div>
     </div>
   </header>
@@ -45,33 +61,33 @@
       <div class="container hero-grid">
         <div>
           <h1>Servicios premium</h1>
-          <p>Elegí el servicio ideal y reservá por WhatsApp.</p>
+          <p>Elegí el servicio ideal y reservá.</p>
           <div class="badges">
-            <span class="badge">Baño</span>
-            <span class="badge">Corte</span>
-            <span class="badge">Spa</span>
+            <span class="badge"><img class="badge-icon" src="assets/img/icons/paw.svg" alt="" aria-hidden="true" />Baño</span>
+            <span class="badge"><img class="badge-icon" src="assets/img/icons/paw.svg" alt="" aria-hidden="true" />Corte</span>
+            <span class="badge"><img class="badge-icon" src="assets/img/icons/paw.svg" alt="" aria-hidden="true" />Spa</span>
           </div>
         </div>
         <div class="card">
           <h2 class="section-title">Turnos rápidos</h2>
-          <p>Contanos raza y tamaño. Respondemos por WhatsApp.</p>
-          <a class="btn btn-primary" data-wa="general" href="#">Reservar por WhatsApp</a>
+          <p>Contanos raza y tamaño.</p>
+          <a class="btn btn-primary" data-wa="general" href="#">WhatsApp</a>
         </div>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
-        <h2 class="section-title">Búsqueda rápida</h2>
+        <h2 class="section-title">Búsqueda</h2>
         <div class="filters">
           <input id="servicios-search" type="search" placeholder="Buscar servicio" aria-label="Buscar servicio" />
-          <select id="servicios-category" aria-label="Filtrar por categoria">
+          <select id="servicios-category" aria-label="Filtrar por categoría">
             <option value="all">Todas las categorías</option>
           </select>
-          <div class="notice">Consultas y reservas solo por WhatsApp.</div>
+          <div class="notice">Reservas por WhatsApp.</div>
         </div>
         <div class="section-subtitle" id="servicios-count">Cargando servicios...</div>
-        <div class="card-grid" id="servicios-grid" data-layout="list"></div>
+        <div class="card-grid" id="servicios-grid"></div>
       </div>
     </section>
   </main>
@@ -80,7 +96,7 @@
     <div class="container footer-grid">
       <div>
         <img src="assets/img/logo.svg" alt="Tomi Peluquería Canina" width="180" height="48" />
-        <p>Cute + premium para mascotas felices en Del Viso.</p>
+        <p>Cute + premium en Del Viso.</p>
         <small>Batalla de Caseros 164, Del Viso, Pilar.</small>
       </div>
       <div>
@@ -92,7 +108,7 @@
         <strong>Links</strong>
         <p><a href="servicios.html">Servicios</a></p>
         <p><a href="catalogo.html">Catálogo</a></p>
-        <p><a href="como-reservar.html">Cómo reservar</a></p>
+        <p><a href="como-reservar.html">Reservar</a></p>
       </div>
     </div>
   </footer>
