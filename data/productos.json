@@ -1,0 +1,46 @@
+﻿{
+  "items": [
+    {
+      "nombre": "Shampoo hipoalergenico",
+      "descripcion": "Formula suave para pieles sensibles.",
+      "precio": "Consultar",
+      "imagen": "",
+      "categoria": "Higiene"
+    },
+    {
+      "nombre": "Perfume canino",
+      "descripcion": "Aroma suave y duradero.",
+      "precio": "Consultar",
+      "imagen": "",
+      "categoria": "Higiene"
+    },
+    {
+      "nombre": "Collar ajustable",
+      "descripcion": "Comodo y resistente.",
+      "precio": "Consultar",
+      "imagen": "",
+      "categoria": "Accesorios"
+    },
+    {
+      "nombre": "Pipetas antipulgas",
+      "descripcion": "Proteccion mensual.",
+      "precio": "Consultar",
+      "imagen": "",
+      "categoria": "Salud"
+    },
+    {
+      "nombre": "Alimento balanceado",
+      "descripcion": "Opciones premium para distintas etapas.",
+      "precio": "Consultar",
+      "imagen": "",
+      "categoria": "Alimento"
+    },
+    {
+      "nombre": "Camita plush",
+      "descripcion": "Suave y lavable.",
+      "precio": "Consultar",
+      "imagen": "",
+      "categoria": "Descanso"
+    }
+  ]
+}

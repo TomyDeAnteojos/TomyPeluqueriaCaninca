@@ -1,0 +1,52 @@
+﻿{
+  "items": [
+    {
+      "nombre": "Baño y secado",
+      "descripcion": "Limpieza profunda con productos suaves.",
+      "precio": "Consultar",
+      "duracion": "60-90 min",
+      "categoria": "Higiene",
+      "imagen": ""
+    },
+    {
+      "nombre": "Corte a tijera",
+      "descripcion": "Estilo personalizado segun la raza.",
+      "precio": "Consultar",
+      "duracion": "60-120 min",
+      "categoria": "Estética",
+      "imagen": ""
+    },
+    {
+      "nombre": "Deslanado",
+      "descripcion": "Ideal para pelo doble y muda.",
+      "precio": "Consultar",
+      "duracion": "60-120 min",
+      "categoria": "Pelo",
+      "imagen": ""
+    },
+    {
+      "nombre": "Higiene de patas y orejas",
+      "descripcion": "Cuidado delicado en zonas sensibles.",
+      "precio": "Consultar",
+      "duracion": "30-45 min",
+      "categoria": "Higiene",
+      "imagen": ""
+    },
+    {
+      "nombre": "Corte de unas",
+      "descripcion": "Corte seguro y prolijo.",
+      "precio": "Consultar",
+      "duracion": "20-30 min",
+      "categoria": "Higiene",
+      "imagen": ""
+    },
+    {
+      "nombre": "Spa premium",
+      "descripcion": "Baño, masaje y perfume.",
+      "precio": "Consultar",
+      "duracion": "90-120 min",
+      "categoria": "Premium",
+      "imagen": ""
+    }
+  ]
+}

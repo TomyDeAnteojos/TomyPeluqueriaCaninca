@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catálogo de productos | Tomi Peluquería Canina</title>
+  <meta name="description" content="Catálogo de productos para mascotas en Del Viso, Pilar. Consultas por WhatsApp." />
+  <link rel="canonical" href="https://example.github.io/TomyPeluqueriaCaninca/catalogo.html" />
+  <meta property="og:title" content="Catálogo Tomi Peluquería Canina" />
+  <meta property="og:description" content="Productos premium para mascotas. Consultas por WhatsApp." />
+  <meta property="og:image" content="assets/img/og-cover.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_AR" />
+  <meta name="theme-color" content="#c44aa3" />
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="catalogo">
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" aria-label="Tomi Peluquería Canina">
+        <img src="assets/img/logo.svg" alt="Tomi Peluquería Canina" width="180" height="48" />
+      </a>
+      <nav class="nav-links" aria-label="Principal">
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="catalogo.html">Catálogo</a>
+        <a href="como-reservar.html">Cómo reservar</a>
+        <a href="index.html#ubicacion">Ubicación</a>
+      </nav>
+      <div class="nav-cta">
+        <button class="toggle" id="theme-toggle" type="button">Modo oscuro</button>
+        <a class="btn btn-primary" data-wa="general" href="#">Reservar por WhatsApp</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h1>Catálogo premium</h1>
+          <p>Productos premium y consulta directa por WhatsApp.</p>
+          <div class="badges">
+            <span class="badge">Accesorios</span>
+            <span class="badge">Higiene</span>
+            <span class="badge">Alimento</span>
+          </div>
+        </div>
+        <div class="card">
+          <h2 class="section-title">Consulta en un clic</h2>
+          <p>Respondemos con disponibilidad y precio.</p>
+          <a class="btn btn-primary" data-wa="general" href="#">Consultar por WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Búsqueda rápida</h2>
+        <div class="filters">
+          <input id="catalogo-search" type="search" placeholder="Buscar producto" aria-label="Buscar producto" />
+          <select id="catalogo-category" aria-label="Filtrar por categoria">
+            <option value="all">Todas las categorías</option>
+          </select>
+          <select id="catalogo-sort" aria-label="Ordenar por precio">
+            <option value="">Ordenar</option>
+            <option value="price-asc">Precio menor a mayor</option>
+            <option value="price-desc">Precio mayor a menor</option>
+          </select>
+        </div>
+        <div class="section-subtitle" id="catalogo-count">Cargando productos...</div>
+        <div class="card-grid" id="catalogo-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+      <div class="container footer-grid">
+      <div>
+        <img src="assets/img/logo.svg" alt="Tomi Peluquería Canina" width="180" height="48" />
+        <p>Cute + premium para mascotas felices en Del Viso.</p>
+        <small>Batalla de Caseros 164, Del Viso, Pilar.</small>
+      </div>
+      <div>
+        <strong>Contacto</strong>
+        <p>WhatsApp: +54 9 11 2382-2819</p>
+        <p><a href="https://www.instagram.com/tomipeluqueriacanina/" target="_blank" rel="noopener">Instagram</a></p>
+      </div>
+      <div>
+        <strong>Links</strong>
+        <p><a href="servicios.html">Servicios</a></p>
+        <p><a href="catalogo.html">Catálogo</a></p>
+        <p><a href="como-reservar.html">Cómo reservar</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <a class="whatsapp-float" data-wa="general" href="#" aria-label="WhatsApp">
+    <img src="assets/img/icons/whatsapp.svg" alt="WhatsApp" width="20" height="20" />
+    WhatsApp
+  </a>
+
+  <script src="js/sheets.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

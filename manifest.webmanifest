@@ -1,0 +1,15 @@
+﻿{
+  "name": "Tomi Peluquería Canina",
+  "short_name": "Tomi Peluquería",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff7fb",
+  "theme_color": "#c44aa3",
+  "icons": [
+    {
+      "src": "assets/img/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
