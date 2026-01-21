@@ -1,0 +1,16 @@
+﻿{
+  "items": [
+    {
+      "pregunta": "¿Que necesito antes del turno?",
+      "respuesta": "Solo correa y avisarnos si hay algo especial."
+    },
+    {
+      "pregunta": "¿Trabajan con nudos o pelo largo?",
+      "respuesta": "Evaluamos y sugerimos lo mejor para su bienestar."
+    },
+    {
+      "pregunta": "¿Cuanto dura el servicio?",
+      "respuesta": "Depende del tamaño. Te damos un estimado al reservar."
+    }
+  ]
+}

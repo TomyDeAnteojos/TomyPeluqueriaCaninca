@@ -5,7 +5,12 @@
       productos: { sheet: "productos", gid: "" },
       servicios: { sheet: "servicios", gid: "" },
       estaticos: { sheet: "estaticos", gid: "" },
-      galeria: { sheet: "galeria", gid: "" }
+      galeria: { sheet: "galeria", gid: "" },
+      horario: { sheet: "horario", gid: "" },
+      sobre_tomi: { sheet: "sobre_tomi", gid: "" },
+      venta: { sheet: "venta", gid: "" },
+      faq: { sheet: "faq", gid: "" },
+      animacion: { sheet: "animacion", gid: "" }
     }
   };
 
@@ -112,6 +117,124 @@
     }
   }
 
+  async function loadHorario() {
+    var sheetConfig = CONFIG.sheets.horario;
+    try {
+      var data = await window.Sheets.fetchSheetCSV({
+        spreadsheetId: CONFIG.spreadsheetId,
+        sheet: sheetConfig.sheet,
+        gid: sheetConfig.gid
+      });
+      var item = data[0] || {};
+      return {
+        inicio: pickField(item, ["inicio", "desde", "open"]) || "",
+        cierre: pickField(item, ["cierre", "hasta", "close"]) || ""
+      };
+    } catch (err) {
+      try {
+        var res = await fetch("data/horario.json");
+        return await res.json();
+      } catch (fallbackErr) {
+        return { inicio: "", cierre: "" };
+      }
+    }
+  }
+
+  async function loadSobreTomi() {
+    var sheetConfig = CONFIG.sheets.sobre_tomi;
+    try {
+      var data = await window.Sheets.fetchSheetCSV({
+        spreadsheetId: CONFIG.spreadsheetId,
+        sheet: sheetConfig.sheet,
+        gid: sheetConfig.gid
+      });
+      var item = data[0] || {};
+      return pickField(item, ["descripcion", "texto", "contenido"]) || "";
+    } catch (err) {
+      try {
+        var res = await fetch("data/sobre_tomi.json");
+        var json = await res.json();
+        return json.descripcion || "";
+      } catch (fallbackErr) {
+        return "";
+      }
+    }
+  }
+
+  async function loadVenta() {
+    var sheetConfig = CONFIG.sheets.venta;
+    try {
+      var data = await window.Sheets.fetchSheetCSV({
+        spreadsheetId: CONFIG.spreadsheetId,
+        sheet: sheetConfig.sheet,
+        gid: sheetConfig.gid
+      });
+      return data
+        .map(function (item) {
+          return pickField(item, ["elementos", "elemento", "item", "nombre"]);
+        })
+        .filter(Boolean);
+    } catch (err) {
+      try {
+        var res = await fetch("data/venta.json");
+        var json = await res.json();
+        return json.items || [];
+      } catch (fallbackErr) {
+        return [];
+      }
+    }
+  }
+
+  async function loadFaq() {
+    var sheetConfig = CONFIG.sheets.faq;
+    try {
+      var data = await window.Sheets.fetchSheetCSV({
+        spreadsheetId: CONFIG.spreadsheetId,
+        sheet: sheetConfig.sheet,
+        gid: sheetConfig.gid
+      });
+      return data
+        .map(function (item) {
+          return {
+            pregunta: pickField(item, ["pregunta", "question", "q"]) || "",
+            respuesta: pickField(item, ["respuesta", "answer", "a"]) || ""
+          };
+        })
+        .filter(function (item) {
+          return item.pregunta || item.respuesta;
+        });
+    } catch (err) {
+      try {
+        var res = await fetch("data/faq.json");
+        var json = await res.json();
+        return json.items || [];
+      } catch (fallbackErr) {
+        return [];
+      }
+    }
+  }
+
+  async function loadAnimacion() {
+    var sheetConfig = CONFIG.sheets.animacion;
+    try {
+      var data = await window.Sheets.fetchSheetCSV({
+        spreadsheetId: CONFIG.spreadsheetId,
+        sheet: sheetConfig.sheet,
+        gid: sheetConfig.gid
+      });
+      var item = data[0] || {};
+      var value = pickField(item, ["animacion", "animation", "activar"]) || "";
+      return value.toString().trim().toLowerCase() === "si";
+    } catch (err) {
+      try {
+        var res = await fetch("data/animacion.json");
+        var json = await res.json();
+        return json.animacion === "si";
+      } catch (fallbackErr) {
+        return false;
+      }
+    }
+  }
   function parsePrice(value) {
     if (!value) {
       return NaN;
@@ -222,6 +345,11 @@
     var galleryContainer = document.querySelector("#home-galeria");
     var galleryFilters = document.querySelector("#home-galeria-filtros");
     var staticsContainer = document.querySelector("#home-estaticos");
+    var sobreTomiText = document.querySelector("#sobre-tomi-text");
+    var ventaList = document.querySelector("#venta-list");
+    var faqList = document.querySelector("#faq-list");
+    var horarioInicio = document.querySelector("#horario-inicio");
+    var horarioCierre = document.querySelector("#horario-cierre");
 
     if (!servicesContainer && !productsContainer) {
       return;
@@ -259,6 +387,54 @@
       if (!staticsContainer.children.length) {
         staticsContainer.style.display = "none";
       }
+    }
+
+    var sobre = await loadSobreTomi();
+    if (sobreTomiText && sobre) {
+      sobreTomiText.textContent = sobre;
+    }
+
+    var ventaItems = await loadVenta();
+    if (ventaList) {
+      ventaList.innerHTML = "";
+      (ventaItems.length ? ventaItems : ["Collares", "Pastillas y pipetas", "Alimento balanceado", "Ropa y camitas", "Desparasitarios"])
+        .forEach(function (item) {
+          var li = document.createElement("li");
+          var bullet = document.createElement("span");
+          bullet.textContent = "•";
+          li.appendChild(bullet);
+          li.appendChild(document.createTextNode(" " + item));
+          ventaList.appendChild(li);
+        });
+    }
+
+    var faqItems = await loadFaq();
+    if (faqList) {
+      faqList.innerHTML = "";
+      faqItems.slice(0, 6).forEach(function (item) {
+        var block = document.createElement("div");
+        block.className = "faq-item";
+        var q = document.createElement("strong");
+        q.textContent = item.pregunta;
+        var a = document.createElement("p");
+        a.textContent = item.respuesta;
+        block.appendChild(q);
+        if (item.respuesta) {
+          block.appendChild(a);
+        }
+        faqList.appendChild(block);
+      });
+      if (!faqList.children.length) {
+        faqList.parentElement.style.display = "none";
+      }
+    }
+
+    var horario = await loadHorario();
+    if (horarioInicio && horario.inicio) {
+      horarioInicio.textContent = horario.inicio;
+    }
+    if (horarioCierre && horario.cierre) {
+      horarioCierre.textContent = horario.cierre;
     }
 
     if (galleryContainer) {
@@ -387,6 +563,22 @@
     setupThemeToggle();
     setupMobileNav();
     setupGeneralWhatsApp();
+    loadAnimacion().then(function (enabled) {
+      if (!enabled) {
+        return;
+      }
+      document.body.classList.add("animaciones-max");
+      if (!document.querySelector(".float-layer")) {
+        var layer = document.createElement("div");
+        layer.className = "float-layer";
+        layer.setAttribute("aria-hidden", "true");
+        layer.innerHTML =
+          '<span class=\"float-shape shape-1\"></span>' +
+          '<span class=\"float-shape shape-2\"></span>' +
+          '<span class=\"float-shape shape-3\"></span>';
+        document.body.appendChild(layer);
+      }
+    });
     var page = document.body.getAttribute("data-page");
     if (page === "home") {
       initHome();

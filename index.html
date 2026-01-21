@@ -83,6 +83,11 @@
 
   <main id="contenido">
     <section class="hero">
+      <div class="float-layer" aria-hidden="true">
+        <span class="float-shape shape-1"></span>
+        <span class="float-shape shape-2"></span>
+        <span class="float-shape shape-3"></span>
+      </div>
       <div class="container hero-grid">
         <div>
           <div class="badges">
@@ -134,13 +139,7 @@
         <div>
           <h2 class="section-title">Venta de</h2>
         </div>
-        <ul class="feature-list">
-          <li><span>•</span> Collares</li>
-          <li><span>•</span> Pastillas y pipetas</li>
-          <li><span>•</span> Alimento balanceado</li>
-          <li><span>•</span> Ropa y camitas</li>
-          <li><span>•</span> Desparasitarios</li>
-        </ul>
+        <ul class="feature-list" id="venta-list"></ul>
       </div>
     </section>
 
@@ -148,7 +147,7 @@
       <div class="container split">
         <div class="info-box">
           <h2 class="section-title">Sobre Tomi</h2>
-          <p>Cuidado con amor y técnica.</p>
+          <p id="sobre-tomi-text">Cuidado con amor y técnica.</p>
           <a class="btn btn-primary" data-wa="general" href="#">WhatsApp</a>
         </div>
         <div class="info-box">
@@ -182,13 +181,20 @@
       </div>
     </section>
 
+    <section class="section" id="faq">
+      <div class="container">
+        <h2 class="section-title">FAQ</h2>
+        <div class="faq" id="faq-list"></div>
+      </div>
+    </section>
+
     <section class="section" id="ubicacion">
       <div class="container split">
         <div>
           <h2 class="section-title">Ubicación</h2>
           <p class="section-subtitle">Batalla de Caseros 164, Del Viso.</p>
           <div class="info-box">
-            <p><strong>Horarios:</strong> Lunes a Sábado, 08:00 a 18:00</p>
+            <p><strong>Horarios:</strong> Lunes a Sábado, <span id="horario-inicio">08:00</span> a <span id="horario-cierre">18:00</span></p>
             <p><strong>WhatsApp:</strong> +54 9 11 2382-2819</p>
             <p><strong>Instagram:</strong> <a href="https://www.instagram.com/tomipeluqueriacanina/" target="_blank" rel="noopener">@tomipeluqueriacanina</a></p>
             <a class="btn btn-primary" data-wa="general" href="#">Reservar</a>
@@ -213,8 +219,10 @@
       </div>
       <div>
         <strong>Contacto</strong>
-        <p>WhatsApp: +54 9 11 2382-2819</p>
-        <p><a href="https://www.instagram.com/tomipeluqueriacanina/" target="_blank" rel="noopener">Instagram</a></p>
+        <div class="footer-icons">
+          <a class="icon-btn" href="https://wa.me/5491123822819" target="_blank" rel="noopener" aria-label="WhatsApp"><img src="assets/img/icons/whatsapp.svg" alt="" aria-hidden="true" /></a>
+          <a class="icon-btn" href="https://www.instagram.com/tomipeluqueriacanina/" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/img/icons/instagram.svg" alt="" aria-hidden="true" /></a>
+        </div>
       </div>
       <div>
         <strong>Links</strong>

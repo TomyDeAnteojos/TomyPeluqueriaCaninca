@@ -49,6 +49,199 @@ body {
   line-height: 1.6;
 }
 
+.float-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.animaciones-max .float-layer {
+  position: fixed;
+  inset: -10% 0 0 0;
+  z-index: 0;
+}
+
+.float-shape {
+  position: absolute;
+  border-radius: 999px;
+  opacity: 0.55;
+  animation: drift 14s ease-in-out infinite;
+}
+
+.shape-1 {
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(255, 122, 200, 0.4), rgba(255, 122, 200, 0));
+  top: 10%;
+  left: 5%;
+}
+
+.shape-2 {
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(124, 77, 255, 0.35), rgba(124, 77, 255, 0));
+  top: 20%;
+  right: 8%;
+  animation-delay: 2s;
+}
+
+.shape-3 {
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(255, 215, 236, 0.6), rgba(255, 215, 236, 0));
+  bottom: 10%;
+  left: 35%;
+  animation-delay: 4s;
+}
+
+.animaciones-max .hero {
+  perspective: 1400px;
+}
+
+.animaciones-max .hero-grid > div:first-child {
+  transform: translateZ(10px);
+}
+
+.animaciones-max .hero-grid > div:last-child {
+  animation: floatCardMagic 7s ease-in-out infinite;
+}
+
+.animaciones-max .float-layer::before,
+.animaciones-max .float-layer::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 20% 20%, rgba(124, 77, 255, 0.15), transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(255, 122, 200, 0.18), transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(255, 215, 236, 0.2), transparent 55%);
+  animation: glowShift 18s ease-in-out infinite;
+}
+
+.animaciones-max .float-layer::after {
+  animation-delay: 4s;
+  mix-blend-mode: screen;
+}
+
+.animaciones-max .shape-1 {
+  animation-duration: 9s;
+}
+
+.animaciones-max .shape-2 {
+  animation-duration: 11s;
+}
+
+.animaciones-max .shape-3 {
+  animation-duration: 10s;
+}
+
+.animaciones-max .navbar,
+.animaciones-max .footer,
+.animaciones-max .section,
+.animaciones-max .card,
+.animaciones-max .gallery-item,
+.animaciones-max .btn,
+.animaciones-max .badge,
+.animaciones-max .info-box {
+  transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+  transform-style: preserve-3d;
+}
+
+.animaciones-max .section:hover {
+  transform: translateY(-2px);
+}
+
+.animaciones-max .info-box:hover {
+  transform: translateY(-4px) rotateX(2deg);
+}
+
+.animaciones-max .btn:hover,
+.animaciones-max .btn:focus {
+  transform: translateY(-3px) rotateX(1deg);
+}
+
+.animaciones-max .badge:hover {
+  transform: translateY(-3px) rotateX(1deg);
+}
+
+.animaciones-max .nav-links a:hover,
+.animaciones-max .nav-links a:focus {
+  transform: translateY(-4px) rotateX(4deg);
+}
+
+.animaciones-max .card {
+  transform: translateZ(0);
+}
+
+.animaciones-max .card:hover {
+  transform: translateY(-12px) rotateX(6deg) rotateY(-5deg) translateZ(6px);
+}
+
+.animaciones-max .gallery-item:hover {
+  transform: translateY(-12px) rotateX(6deg) translateZ(6px);
+}
+
+.animaciones-max .card img,
+.animaciones-max .gallery-item img,
+.animaciones-max .gallery-item video,
+.animaciones-max .gallery-item iframe {
+  transform: translateZ(6px);
+}
+
+.animaciones-max .btn {
+  box-shadow: 0 12px 30px rgba(124, 77, 255, 0.2);
+}
+
+.animaciones-max .info-box {
+  box-shadow: 0 16px 40px rgba(255, 122, 200, 0.18);
+}
+
+.animaciones-max .nav-links a img {
+  transform: translateZ(6px);
+}
+
+.animaciones-max .section-title {
+  animation: titleFloat 6s ease-in-out infinite;
+}
+
+.animaciones-max .badges {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+
+.animaciones-max .section:nth-of-type(even) .card:hover {
+  transform: translateY(-12px) rotateX(5deg) rotateY(4deg) translateZ(6px);
+}
+
+.animaciones-max .whatsapp-float {
+  animation: pulseFloat 5s ease-in-out infinite;
+}
+
+.animaciones-max .reveal {
+  transform: translateY(24px) scale(0.98);
+}
+
+.animaciones-max .reveal.is-visible {
+  transform: translateY(0) scale(1);
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+.animaciones-max .static-item {
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.animaciones-max .static-item:hover {
+  transform: translateY(-6px) rotateX(6deg) rotateY(-6deg);
+  box-shadow: 0 16px 35px rgba(124, 77, 255, 0.2);
+}
+
+.animaciones-max .feature-list li {
+  transform-style: preserve-3d;
+}
+
+.animaciones-max .feature-list li:hover {
+  transform: translateY(-4px) rotateX(4deg);
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -201,6 +394,19 @@ select:focus-visible {
   gap: 0.6rem;
 }
 
+.footer-icons {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+}
+
+[data-theme="dark"] .icon-link img,
+[data-theme="dark"] .icon-btn img,
+[data-theme="dark"] .badge-icon,
+[data-theme="dark"] .tag-icon {
+  filter: brightness(1.2) saturate(1.1);
+}
+
 .icon-link img {
   width: 22px;
   height: 22px;
@@ -309,12 +515,16 @@ body.nav-open .nav-mobile {
   background: var(--hero-grad);
   padding: 4.5rem 0 3rem;
   perspective: 1000px;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero-grid {
   display: grid;
   gap: 2.5rem;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-grid > div:last-child {
@@ -440,6 +650,62 @@ body.nav-open .nav-mobile {
   height: 180px;
   object-fit: cover;
   background: #f5e4ef;
+}
+
+.animaciones-max[data-page="catalogo"] .card,
+.animaciones-max[data-page="servicios"] .card {
+  background: linear-gradient(135deg, rgba(255, 247, 251, 0.9), rgba(255, 255, 255, 0.7));
+  border: 1px solid rgba(255, 122, 200, 0.35);
+  box-shadow: 0 24px 55px rgba(124, 77, 255, 0.18);
+  backdrop-filter: blur(8px);
+}
+
+.animaciones-max[data-page="catalogo"] .card::after,
+.animaciones-max[data-page="servicios"] .card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid rgba(124, 77, 255, 0.35);
+  opacity: 0;
+  transition: opacity var(--transition);
+  pointer-events: none;
+}
+
+.animaciones-max[data-page="catalogo"] .card:hover::after,
+.animaciones-max[data-page="servicios"] .card:hover::after {
+  opacity: 1;
+}
+
+.animaciones-max[data-page="catalogo"] .card,
+.animaciones-max[data-page="servicios"] .card {
+  position: relative;
+}
+
+.animaciones-max[data-page="catalogo"] .card img,
+.animaciones-max[data-page="servicios"] .card img {
+  height: 220px;
+  transform: translateZ(10px);
+}
+
+.animaciones-max[data-page="catalogo"] .card-header,
+.animaciones-max[data-page="servicios"] .card-header {
+  align-items: flex-start;
+}
+
+.animaciones-max[data-page="catalogo"] .card-title,
+.animaciones-max[data-page="servicios"] .card-title {
+  font-size: 1.15rem;
+}
+
+.animaciones-max[data-page="catalogo"] .card-price,
+.animaciones-max[data-page="servicios"] .card-price {
+  background: rgba(124, 77, 255, 0.2);
+}
+
+.animaciones-max[data-page="catalogo"] .card-grid,
+.animaciones-max[data-page="servicios"] .card-grid {
+  gap: 2rem;
 }
 
 .card-title {
@@ -732,12 +998,93 @@ select {
   }
 }
 
+@keyframes floatCardMagic {
+  0% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+  }
+  40% {
+    transform: translateY(-10px) rotateX(4deg) rotateY(-3deg);
+  }
+  70% {
+    transform: translateY(-6px) rotateX(2deg) rotateY(3deg);
+  }
+  100% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+  }
+}
+
 @keyframes navDrop {
   from {
     transform: translateY(-140%);
   }
   to {
     transform: translateY(0);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-10px) translateX(12px);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+}
+
+@keyframes glowShift {
+  0% {
+    transform: translateY(0px);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-12px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 0.7;
+  }
+}
+
+@keyframes titleFloat {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes floatSlow {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes pulseFloat {
+  0% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 14px 30px rgba(37, 211, 102, 0.35);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 18px 36px rgba(37, 211, 102, 0.45);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 14px 30px rgba(37, 211, 102, 0.35);
   }
 }
 
