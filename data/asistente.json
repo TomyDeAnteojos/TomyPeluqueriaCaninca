@@ -1,0 +1,36 @@
+﻿{
+  "base_precios": {
+    "pequeno": "12000",
+    "mediano": "16000",
+    "grande": "22000"
+  },
+  "rules": [
+    {
+      "id": "regla-1",
+      "prioridad": 1,
+      "condiciones": "objetivo=deslanado; pelo=doble_capa",
+      "servicio_slug": "Deslanado",
+      "mensaje": "Ideal para doble capa y muda intensa.",
+      "desde_precio": "20000",
+      "tags_extras": "uñas"
+    },
+    {
+      "id": "regla-2",
+      "prioridad": 2,
+      "condiciones": "objetivo=corte; pelo=largo",
+      "servicio_slug": "Corte A Tijera",
+      "mensaje": "Corte a medida para pelo largo.",
+      "desde_precio": "18000",
+      "tags_extras": "baño"
+    },
+    {
+      "id": "regla-3",
+      "prioridad": 3,
+      "condiciones": "objetivo=higiene",
+      "servicio_slug": "Baño Y Secado",
+      "mensaje": "Servicio de higiene completa.",
+      "desde_precio": "15000",
+      "tags_extras": "perfume"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+﻿{
+  "items": [
+    {
+      "titulo": "Promo de bienvenida",
+      "descripcion": "10% off en el primer turno.",
+      "etiqueta": "Nuevo",
+      "activo": "no"
+    }
+  ]
+}

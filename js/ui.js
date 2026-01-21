@@ -8,6 +8,20 @@
     return "assets/img/og-cover.jpg";
   }
 
+  function formatPrice(value) {
+    if (!value) {
+      return "";
+    }
+    var str = value.toString().trim();
+    if (!str) {
+      return "";
+    }
+    if (!/\$/.test(str)) {
+      return "$" + str;
+    }
+    return str;
+  }
+
   function buildTag(label, icon) {
     var tag = document.createElement("span");
     tag.className = "tag";
@@ -49,11 +63,7 @@
     header.appendChild(title);
 
     if (item.precio) {
-      var priceValue = item.precio.toString().trim();
-      var hasCurrency = /[$€£]/.test(priceValue);
-      if (!hasCurrency) {
-        priceValue = "$" + priceValue;
-      }
+      var priceValue = formatPrice(item.precio);
       var price = document.createElement("div");
       price.className = "card-price";
       price.textContent = priceValue;
@@ -82,7 +92,7 @@
 
     var message = "Hola! Quiero consultar por el " + (type === "producto" ? "producto" : "servicio") + ": " + (item.nombre || "");
     if (item.precio) {
-      message += ". Precio: " + item.precio;
+      message += ". Precio: " + formatPrice(item.precio);
     }
     if (type === "servicio") {
       message += ". Mi mascota es {tamaño(opcional)}.";

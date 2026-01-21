@@ -17,7 +17,7 @@ Este sitio carga datos desde Google Sheets y usa fallback local si falla.
 
 ### Paso 1: publicar la planilla
 - Abrí el Sheet y andá a `Archivo > Publicar en la web`.
-- Publicá toda la planilla o al menos las hojas `productos`, `servicios`, `estaticos`, `galeria`, `horario`, `sobre_tomi`, `venta`, `faq`, `animacion` y `seo`.
+- Publicá toda la planilla o al menos las hojas `productos`, `servicios`, `estaticos`, `galeria`, `horario`, `sobre_tomi`, `venta`, `faq`, `animacion`, `seo`, `asistente` y `promos`.
 
 ### Paso 2: URLs CSV recomendadas
 - Productos:
@@ -40,10 +40,14 @@ Este sitio carga datos desde Google Sheets y usa fallback local si falla.
   `https://docs.google.com/spreadsheets/d/{ID}/gviz/tq?tqx=out:csv&sheet=animacion`
 - SEO:
   `https://docs.google.com/spreadsheets/d/{ID}/gviz/tq?tqx=out:csv&sheet=seo`
+- Asistente:
+  `https://docs.google.com/spreadsheets/d/{ID}/gviz/tq?tqx=out:csv&sheet=asistente`
+- Promos:
+  `https://docs.google.com/spreadsheets/d/{ID}/gviz/tq?tqx=out:csv&sheet=promos`
 
 ### Paso 3: ID del Sheet y nombre de hojas
 - El ID actual está configurado en `js/main.js`.
-- Si usás `gid`, agregá el valor en `CONFIG.sheets.productos.gid`, `CONFIG.sheets.servicios.gid`, `CONFIG.sheets.estaticos.gid`, `CONFIG.sheets.galeria.gid`, `CONFIG.sheets.horario.gid`, `CONFIG.sheets.sobre_tomi.gid`, `CONFIG.sheets.venta.gid`, `CONFIG.sheets.faq.gid`, `CONFIG.sheets.animacion.gid` o `CONFIG.sheets.seo.gid`.
+- Si usás `gid`, agregá el valor en `CONFIG.sheets.productos.gid`, `CONFIG.sheets.servicios.gid`, `CONFIG.sheets.estaticos.gid`, `CONFIG.sheets.galeria.gid`, `CONFIG.sheets.horario.gid`, `CONFIG.sheets.sobre_tomi.gid`, `CONFIG.sheets.venta.gid`, `CONFIG.sheets.faq.gid`, `CONFIG.sheets.animacion.gid`, `CONFIG.sheets.seo.gid`, `CONFIG.sheets.asistente.gid` o `CONFIG.sheets.promos.gid`.
 
 ## Formato flexible de datos
 - Productos: `nombre`, `descripcion`, `precio`, `imagen`, `categoria`.
@@ -56,6 +60,8 @@ Este sitio carga datos desde Google Sheets y usa fallback local si falla.
 - FAQ: `pregunta`, `respuesta`.
 - Animacion: `animacion` (poner `si` para activar).
 - SEO: `seo`.
+- Asistente: `id`, `prioridad`, `condiciones`, `servicio_slug`, `mensaje`, `desde_precio`, `tags_extras`.
+- Promos: `titulo`, `descripcion`, `etiqueta`, `activo`.
 
 Si falta algún campo, la UI sigue funcionando.
 
@@ -68,7 +74,14 @@ Si falta algún campo, la UI sigue funcionando.
 - Reemplazala por una foto real (1200x630 recomendado).
 - Si usas fotos en Sheets, completa la columna `imagen` con URLs públicas.
 
+## Asistente inteligente
+- Página: `asistente.html`.
+- Motor por reglas desde la hoja `asistente`.
+- Formato sugerido de condiciones: `tamano=grande; pelo=doble_capa; objetivo=deslanado`.
+- `servicio_slug` debe coincidir con el nombre del servicio.
+- Mensaje WhatsApp se arma con tamaño, pelo, estado, horarios y link.
+
 ## Archivos principales
 - HTML: `index.html`, `catalogo.html`, `servicios.html`, `como-reservar.html`.
 - JS: `js/main.js`, `js/ui.js`, `js/sheets.js`.
-- Fallback data: `data/productos.json`, `data/servicios.json`, `data/estaticos.json`, `data/galeria.json`, `data/horario.json`, `data/sobre_tomi.json`, `data/venta.json`, `data/faq.json`, `data/animacion.json`.
+- Fallback data: `data/productos.json`, `data/servicios.json`, `data/estaticos.json`, `data/galeria.json`, `data/horario.json`, `data/sobre_tomi.json`, `data/venta.json`, `data/faq.json`, `data/animacion.json`, `data/asistente.json`, `data/promos.json`.

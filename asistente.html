@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Servicios de peluquería canina | Tomi Peluquería Canina</title>
-  <meta name="description" content="Servicios de peluquería canina premium en Del Viso, Pilar. Baños, cortes y cuidado completo. Reservas por WhatsApp." />
+  <title>Asistente Inteligente | Tomi Peluquería Canina</title>
+  <meta name="description" content="Respondé unas preguntas y te recomendamos el servicio ideal. Enviá el resultado por WhatsApp." />
   <meta name="keywords" content="peluquer?a canina, peluquer?a canina pilar, peluquer?a canina del viso, peluquer?a canina en pilar, peluquer?a canina en del viso, peluquer?a canina cerca, peluquer?a canina cerca de m?, peluquer?a canina zona norte, peluquer?a canina buenos aires, peluquer?a canina gba norte, ba?o y corte canino, ba?o y corte para perros, ba?o y corte canino pilar, ba?o y corte canino del viso, ba?o para perros, corte de pelo para perros, corte canino profesional, grooming canino, grooming canino pilar, grooming para perros, grooming profesional perros, groomer canino pilar, groomer canino del viso, peluquer?a para perros, peluquer?a para perros pilar, peluquer?a para perros del viso, peluquer?a de mascotas, peluquer?a de mascotas pilar, ba?o antipulgas para perros, ba?o medicado para perros, ba?os medicados caninos, tratamiento antipulgas perros, desparasitaci?n canina, desparasitarios para perros, deslanado canino, deslanado para perros, deslanado profesional, deslanado perros pilar, corte de u?as para perros, limpieza de o?dos para perros, higiene canina, peluquer?a canina econ?mica, peluquer?a canina de confianza, mejor peluquer?a canina pilar, peluquer?a canina recomendada, peluquer?a canina con turnos, turnos peluquer?a canina, turnos ba?o y corte perros, venta de productos para mascotas, productos para perros pilar, productos para mascotas del viso, venta de collares para perros, venta de pipetas para perros, venta de antipulgas perros, venta de alimento balanceado, alimento balanceado para perros, ropa para perros, camitas para perros, accesorios para mascotas, pet shop pilar, pet shop del viso, tienda para mascotas pilar, peluquer?a canina con whatsapp, peluquer?a canina turnos por whatsapp, peluquer?a canina instagram, ba?o y corte perros cerca, grooming perros cerca, peluquer?a canina abierta hoy, cuidado canino profesional, cuidado de mascotas, est?tica canina, est?tica canina pilar, peluquer?a canina para cachorros, peluquer?a canina perros grandes, peluquer?a canina perros chicos, peluquer?a canina zona del viso, peluquer?a canina barrio del viso, peluquer?a canina pilar centro" />
-  <link rel="canonical" href="https://example.github.io/TomyPeluqueriaCaninca/servicios.html" />
-  <meta property="og:title" content="Servicios Tomi Peluquería Canina" />
-  <meta property="og:description" content="Baños, cortes y cuidado premium. Reservas por WhatsApp." />
+  <link rel="canonical" href="https://example.github.io/TomyPeluqueriaCaninca/asistente.html" />
+  <meta property="og:title" content="Asistente Inteligente" />
+  <meta property="og:description" content="Recomendación de servicio por tamaño, pelo y objetivo." />
   <meta property="og:image" content="assets/img/og-cover.jpg" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_AR" />
@@ -20,7 +20,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body data-page="servicios">
+<body data-page="asistente">
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header class="navbar">
     <div class="container navbar-inner">
@@ -63,34 +63,64 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <h1>Servicios premium</h1>
-          <p>Elegí el servicio ideal y reservá.</p>
+          <h1>Asistente inteligente</h1>
+          <p>Respondé unas preguntas y te recomendamos el servicio ideal.</p>
           <div class="badges">
-            <span class="badge"><img class="badge-icon" src="assets/img/icons/paw.svg" alt="" aria-hidden="true" />Baño</span>
-            <span class="badge"><img class="badge-icon" src="assets/img/icons/paw.svg" alt="" aria-hidden="true" />Corte</span>
-            <span class="badge"><img class="badge-icon" src="assets/img/icons/paw.svg" alt="" aria-hidden="true" />Spa</span>
+            <span class="badge"><img class="badge-icon" src="assets/img/icons/paw.svg" alt="" aria-hidden="true" />Recomendación</span>
+            <span class="badge"><img class="badge-icon" src="assets/img/icons/clock.svg" alt="" aria-hidden="true" />Rápido</span>
           </div>
         </div>
         <div class="card">
-          <h2 class="section-title">Turnos rápidos</h2>
-          <p>Contanos raza y tamaño.</p>
-          <a class="btn btn-primary" data-wa="general" href="#">WhatsApp</a>
+          <h2 class="section-title">Progreso</h2>
+          <div class="stepper-progress">
+            <div class="progress-bar"><span id="progress-bar"></span></div>
+            <span id="progress-label">1/6</span>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section">
-      <div class="container">
-        <h2 class="section-title">Búsqueda</h2>
-        <div class="filters">
-          <input id="servicios-search" type="search" placeholder="Buscar servicio" aria-label="Buscar servicio" />
-          <select id="servicios-category" aria-label="Filtrar por categoría">
-            <option value="all">Todas las categorías</option>
-          </select>
-          <div class="notice">Reservas por WhatsApp.</div>
+      <div class="container assistant-card">
+        <div class="assistant-question">
+          <h2 id="question-title"></h2>
+          <p id="question-sub"></p>
         </div>
-        <div class="section-subtitle" id="servicios-count">Cargando servicios...</div>
-        <div class="card-grid" id="servicios-grid"></div>
+        <div class="assistant-options" id="question-options"></div>
+        <div class="assistant-actions">
+          <button class="btn btn-outline" id="prev-step" type="button">Anterior</button>
+          <button class="btn btn-primary" id="next-step" type="button">Siguiente</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="assistant-result" style="display: none;">
+      <div class="container">
+        <div class="result-card">
+          <h2 class="section-title" id="result-title"></h2>
+          <p id="result-note"></p>
+          <div class="badges" id="result-extras"></div>
+          <div class="estimate" id="result-price"></div>
+          <p class="disclaimer">El precio final se confirma por WhatsApp según tamaño y estado del pelaje.</p>
+          <div class="assistant-actions">
+            <a class="btn btn-primary" id="result-whatsapp" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+            <button class="btn btn-outline" id="restart" type="button">Volver a empezar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ics-section" style="display: none;">
+      <div class="container">
+        <div class="info-box">
+          <h2 class="section-title">Guardar recordatorio</h2>
+          <p>Elegí fecha y horario sugerido para el turno.</p>
+          <div class="ics-grid">
+            <input type="date" id="ics-date" aria-label="Fecha" />
+            <input type="time" id="ics-time" aria-label="Horario" />
+            <button class="btn btn-primary" id="ics-download" type="button">Descargar .ics</button>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -118,13 +148,9 @@
     </div>
   </footer>
 
-  <a class="whatsapp-float" data-wa="general" href="#" aria-label="WhatsApp">
-    <img src="assets/img/icons/whatsapp.svg" alt="WhatsApp" width="20" height="20" />
-    WhatsApp
-  </a>
-
   <script src="js/sheets.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/assistant.js"></script>
 </body>
 </html>

@@ -11,7 +11,9 @@
       venta: { sheet: "venta", gid: "" },
       faq: { sheet: "faq", gid: "" },
       animacion: { sheet: "animacion", gid: "" },
-      seo: { sheet: "seo", gid: "" }
+      seo: { sheet: "seo", gid: "" },
+      asistente: { sheet: "asistente", gid: "" },
+      promos: { sheet: "promos", gid: "" }
     }
   };
 
@@ -27,9 +29,25 @@
     if (!value) {
       return "";
     }
-    return value.replace(/\S+/g, function (word) {
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    });
+    var text = value.toString().trim();
+    if (!text) {
+      return "";
+    }
+    var result = "";
+    var shouldCap = true;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (shouldCap && /[a-zA-Z\u00C0-\u017F]/.test(ch)) {
+        result += ch.toUpperCase();
+        shouldCap = false;
+        continue;
+      }
+      result += ch;
+      if (ch === ".") {
+        shouldCap = true;
+      }
+    }
+    return result;
   }
 
   function pickField(obj, names) {
@@ -233,14 +251,33 @@
         sheet: sheetConfig.sheet,
         gid: sheetConfig.gid
       });
-      var item = data[0] || {};
-      return pickField(item, ["seo", "descripcion", "texto"]) || "";
+      return data || [];
     } catch (err) {
-      return "";
+      return [];
     }
   }
 
-async function loadAnimacion() {
+  async function loadPromos() {
+    var sheetConfig = CONFIG.sheets.promos;
+    try {
+      var data = await window.Sheets.fetchSheetCSV({
+        spreadsheetId: CONFIG.spreadsheetId,
+        sheet: sheetConfig.sheet,
+        gid: sheetConfig.gid
+      });
+      return data || [];
+    } catch (err) {
+      try {
+        var res = await fetch("data/promos.json");
+        var json = await res.json();
+        return json.items || [];
+      } catch (fallbackErr) {
+        return [];
+      }
+    }
+  }
+
+  async function loadAnimacion() {
     var sheetConfig = CONFIG.sheets.animacion;
     try {
       var data = await window.Sheets.fetchSheetCSV({
@@ -357,8 +394,7 @@ async function loadAnimacion() {
   }
 
   function setupGeneralWhatsApp() {
-    var generalMessage =
-      "Hola! Quiero reservar un turno para mi mascota. Estoy en Del Viso/Pilar. ¿Qué disponibilidad tienen?";
+    var generalMessage = "Hola! Quiero reservar un turno para mi mascota. Estoy en Del Viso/Pilar. ?Qu? disponibilidad tienen?";
     var links = document.querySelectorAll("[data-wa='general']");
     links.forEach(function (link) {
       link.href = window.UI.buildWhatsAppLink(generalMessage);
@@ -376,6 +412,7 @@ async function loadAnimacion() {
     var faqList = document.querySelector("#faq-list");
     var horarioInicio = document.querySelector("#horario-inicio");
     var horarioCierre = document.querySelector("#horario-cierre");
+    var promoBanner = document.querySelector("#promo-banner");
 
     if (!servicesContainer && !productsContainer) {
       return;
@@ -492,6 +529,22 @@ async function loadAnimacion() {
     }
     if (horarioCierre && horario.cierre) {
       horarioCierre.textContent = horario.cierre;
+    }
+
+    if (promoBanner) {
+      var promos = await loadPromos();
+      var promoActiva = promos.find(function (promo) {
+        var activo = (promo.activo || "").toString().trim().toLowerCase();
+        return activo === "si";
+      });
+      if (promoActiva) {
+        promoBanner.style.display = "flex";
+        promoBanner.querySelector("[data-promo-title]").textContent = promoActiva.titulo || "Promo";
+        promoBanner.querySelector("[data-promo-desc]").textContent = promoActiva.descripcion || "";
+        promoBanner.querySelector("[data-promo-tag]").textContent = promoActiva.etiqueta || "Nuevo";
+      } else {
+        promoBanner.style.display = "none";
+      }
     }
 
     if (galleryContainer) {
@@ -621,7 +674,93 @@ async function loadAnimacion() {
     setupMobileNav();
     setupGeneralWhatsApp();
 
-    loadSeo().then(function (seoText) {
+    var baseKeywords = [
+      "peluqueria canina",
+      "peluqueria canina pilar",
+      "peluqueria canina del viso",
+      "peluqueria canina en pilar",
+      "peluqueria canina en del viso",
+      "peluqueria canina cerca",
+      "peluqueria canina cerca de mi",
+      "peluqueria canina zona norte",
+      "peluqueria canina buenos aires",
+      "peluqueria canina gba norte",
+      "bano y corte canino",
+      "bano y corte para perros",
+      "bano y corte canino pilar",
+      "bano y corte canino del viso",
+      "bano para perros",
+      "corte de pelo para perros",
+      "corte canino profesional",
+      "grooming canino",
+      "grooming canino pilar",
+      "grooming para perros",
+      "grooming profesional perros",
+      "groomer canino pilar",
+      "groomer canino del viso",
+      "peluqueria para perros",
+      "peluqueria para perros pilar",
+      "peluqueria para perros del viso",
+      "peluqueria de mascotas",
+      "peluqueria de mascotas pilar",
+      "bano antipulgas para perros",
+      "bano medicado para perros",
+      "banos medicados caninos",
+      "tratamiento antipulgas perros",
+      "desparasitacion canina",
+      "desparasitarios para perros",
+      "deslanado canino",
+      "deslanado para perros",
+      "deslanado profesional",
+      "deslanado perros pilar",
+      "corte de unas para perros",
+      "limpieza de oidos para perros",
+      "higiene canina",
+      "peluqueria canina economica",
+      "peluqueria canina de confianza",
+      "mejor peluqueria canina pilar",
+      "peluqueria canina recomendada",
+      "peluqueria canina con turnos",
+      "turnos peluqueria canina",
+      "turnos bano y corte perros",
+      "venta de productos para mascotas",
+      "productos para perros pilar",
+      "productos para mascotas del viso",
+      "venta de collares para perros",
+      "venta de pipetas para perros",
+      "venta de antipulgas perros",
+      "venta de alimento balanceado",
+      "alimento balanceado para perros",
+      "ropa para perros",
+      "camitas para perros",
+      "accesorios para mascotas",
+      "pet shop pilar",
+      "pet shop del viso",
+      "tienda para mascotas pilar",
+      "peluqueria canina con whatsapp",
+      "peluqueria canina turnos por whatsapp",
+      "peluqueria canina instagram",
+      "bano y corte perros cerca",
+      "grooming perros cerca",
+      "peluqueria canina abierta hoy",
+      "cuidado canino profesional",
+      "cuidado de mascotas",
+      "estetica canina",
+      "estetica canina pilar",
+      "peluqueria canina para cachorros",
+      "peluqueria canina perros grandes",
+      "peluqueria canina perros chicos",
+      "peluqueria canina zona del viso",
+      "peluqueria canina barrio del viso",
+      "peluqueria canina pilar centro"
+    ];
+
+    loadSeo().then(function (seoRows) {
+      var seoText = "";
+      if (seoRows.length) {
+        var first = seoRows[0] || {};
+        seoText = pickField(first, ["seo", "descripcion", "texto"]) || "";
+      }
       if (!seoText) {
         return;
       }
@@ -633,6 +772,26 @@ async function loadAnimacion() {
       if (ogDescription) {
         ogDescription.setAttribute("content", seoText);
       }
+    });
+
+    loadSeo().then(function (seoRows) {
+      var extraKeywords = seoRows
+        .map(function (row) {
+          return pickField(row, ["seo", "keyword", "palabra", "termino"]) || "";
+        })
+        .map(function (value) {
+          return value.toString().trim().toLowerCase();
+        })
+        .filter(Boolean);
+      var keywords = baseKeywords.concat(extraKeywords);
+      var unique = Array.from(new Set(keywords));
+      var keywordsMeta = document.querySelector('meta[name="keywords"]');
+      if (!keywordsMeta) {
+        keywordsMeta = document.createElement("meta");
+        keywordsMeta.setAttribute("name", "keywords");
+        document.head.appendChild(keywordsMeta);
+      }
+      keywordsMeta.setAttribute("content", unique.join(", "));
     });
     loadAnimacion().then(function (enabled) {
       if (!enabled) {
@@ -650,6 +809,9 @@ async function loadAnimacion() {
         document.body.appendChild(layer);
       }
     });
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js").catch(function () {});
+    }
     var page = document.body.getAttribute("data-page");
     if (page === "home") {
       initHome();

@@ -550,6 +550,115 @@ body.nav-open .nav-mobile {
   gap: 0.6rem;
 }
 
+.promo-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: rgba(255, 122, 200, 0.12);
+  border: 1px solid rgba(255, 122, 200, 0.3);
+  border-radius: 18px;
+  padding: 0.6rem 0.9rem;
+  margin: 1rem 0 0.6rem;
+}
+
+.promo-tag {
+  background: var(--primary);
+  color: #fff;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.promo-banner p {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.assistant-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  display: grid;
+  gap: 1.6rem;
+}
+
+.assistant-question h2 {
+  margin: 0 0 0.4rem;
+  font-family: "Playfair Display", serif;
+}
+
+.assistant-options {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.assistant-options .btn {
+  justify-content: flex-start;
+}
+
+.assistant-options .is-selected {
+  background: rgba(124, 77, 255, 0.15);
+  border-color: rgba(124, 77, 255, 0.4);
+}
+
+.assistant-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.stepper-progress {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 122, 200, 0.2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(120deg, var(--primary), var(--accent));
+  width: 0%;
+  transition: width var(--transition);
+}
+
+.result-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.estimate {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+
+.disclaimer {
+  color: var(--muted);
+  margin: 0;
+}
+
+.ics-grid {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  align-items: center;
+}
+
 .badge {
   background: rgba(255, 122, 200, 0.15);
   color: var(--primary);
