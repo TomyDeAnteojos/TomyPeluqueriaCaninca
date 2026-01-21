@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sugerencias de contenido | Tomi Peluquería Canina</title>
+  <meta name="description" content="Revisión de contenido del Sheet: duplicados, faltas y lenguaje inapropiado." />
+  <link rel="canonical" href="https://example.github.io/TomyPeluqueriaCaninca/sugerencias.html" />
+  <meta property="og:title" content="Sugerencias de contenido" />
+  <meta property="og:description" content="Chequeo de datos cargados en Sheets." />
+  <meta property="og:image" content="assets/img/og-cover.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_AR" />
+  <meta name="theme-color" content="#c44aa3" />
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="sugerencias">
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" aria-label="Tomi Peluquería Canina">
+        <img src="assets/img/logo.svg" alt="Tomi Peluquería Canina" width="180" height="48" />
+      </a>
+      <nav class="nav-links" aria-label="Principal">
+        <a class="icon-link" href="index.html" aria-label="Inicio"><img src="assets/img/icons/home.svg" alt="" aria-hidden="true" /></a>
+        <a class="icon-link" href="servicios.html" aria-label="Servicios"><img src="assets/img/icons/scissors.svg" alt="" aria-hidden="true" /></a>
+        <a class="icon-link" href="catalogo.html" aria-label="Catálogo"><img src="assets/img/icons/catalog.svg" alt="" aria-hidden="true" /></a>
+        <a class="icon-link" href="como-reservar.html" aria-label="Reservar"><img src="assets/img/icons/chat.svg" alt="" aria-hidden="true" /></a>
+        <a class="icon-link" href="index.html#ubicacion" aria-label="Ubicación"><img src="assets/img/icons/map.svg" alt="" aria-hidden="true" /></a>
+      </nav>
+      <div class="nav-cta">
+        <button class="toggle icon-btn" id="theme-toggle" type="button" aria-label="Modo oscuro"><img src="assets/img/icons/moon.svg" alt="" aria-hidden="true" /><span class="sr-only">Modo oscuro</span></button>
+        <a class="icon-btn" data-wa="general" href="#" aria-label="WhatsApp"><img src="assets/img/icons/whatsapp.svg" alt="" aria-hidden="true" /></a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Abrir menú">☰</button>
+      </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile" aria-label="Menú móvil">
+      <div class="container">
+        <div class="nav-mobile-header">
+          <span class="sr-only">Menú</span>
+          <button class="nav-close" id="nav-close" type="button" aria-label="Cerrar menú">✕</button>
+        </div>
+        <ul>
+          <li><a class="icon-link" href="index.html"><img src="assets/img/icons/home.svg" alt="" aria-hidden="true" /><span class="sr-only">Inicio</span></a></li>
+          <li><a class="icon-link" href="servicios.html"><img src="assets/img/icons/scissors.svg" alt="" aria-hidden="true" /><span class="sr-only">Servicios</span></a></li>
+          <li><a class="icon-link" href="catalogo.html"><img src="assets/img/icons/catalog.svg" alt="" aria-hidden="true" /><span class="sr-only">Catálogo</span></a></li>
+          <li><a class="icon-link" href="como-reservar.html"><img src="assets/img/icons/chat.svg" alt="" aria-hidden="true" /><span class="sr-only">Reservar</span></a></li>
+          <li><a class="icon-link" href="index.html#ubicacion"><img src="assets/img/icons/map.svg" alt="" aria-hidden="true" /><span class="sr-only">Ubicación</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h1>Sugerencias de contenido</h1>
+          <p>Chequeo automático de duplicados, faltas y lenguaje inapropiado.</p>
+          <div class="badges">
+            <span class="badge"><img class="badge-icon" src="assets/img/icons/paw.svg" alt="" aria-hidden="true" />Productos</span>
+            <span class="badge"><img class="badge-icon" src="assets/img/icons/paw.svg" alt="" aria-hidden="true" />Servicios</span>
+            <span class="badge"><img class="badge-icon" src="assets/img/icons/paw.svg" alt="" aria-hidden="true" />FAQ</span>
+          </div>
+        </div>
+        <div class="card">
+          <h2 class="section-title">Resumen</h2>
+          <div id="summary" class="feature-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Duplicados</h2>
+        <div class="report-list" id="duplicates-list"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Campos faltantes</h2>
+        <div class="report-list" id="missing-list"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Posibles faltas ortográficas</h2>
+        <div class="report-list" id="typos-list"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Lenguaje inapropiado</h2>
+        <div class="report-list" id="badwords-list"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Mayúsculas</h2>
+        <div class="report-list" id="caps-list"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">URLs inválidas</h2>
+        <div class="report-list" id="urls-list"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Precios sin número</h2>
+        <div class="report-list" id="prices-list"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Textos muy largos</h2>
+        <div class="report-list" id="length-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <img src="assets/img/logo.svg" alt="Tomi Peluquería Canina" width="180" height="48" />
+        <p>Cute + premium en Del Viso.</p>
+        <small>Batalla de Caseros 164, Del Viso, Pilar.</small>
+      </div>
+      <div>
+        <strong>Contacto</strong>
+        <div class="footer-icons">
+          <a class="icon-btn" href="https://wa.me/5491123822819" target="_blank" rel="noopener" aria-label="WhatsApp"><img src="assets/img/icons/whatsapp.svg" alt="" aria-hidden="true" /></a>
+          <a class="icon-btn" href="https://www.instagram.com/tomipeluqueriacanina/" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/img/icons/instagram.svg" alt="" aria-hidden="true" /></a>
+        </div>
+      </div>
+      <div>
+        <strong>Links</strong>
+        <p><a href="servicios.html">Servicios</a></p>
+        <p><a href="catalogo.html">Catálogo</a></p>
+        <p><a href="como-reservar.html">Reservar</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/sheets.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/sugerencias.js"></script>
+</body>
+</html>

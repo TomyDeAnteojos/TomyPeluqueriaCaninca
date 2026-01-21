@@ -49,9 +49,14 @@
     header.appendChild(title);
 
     if (item.precio) {
+      var priceValue = item.precio.toString().trim();
+      var hasCurrency = /[$€£]/.test(priceValue);
+      if (!hasCurrency) {
+        priceValue = "$" + priceValue;
+      }
       var price = document.createElement("div");
       price.className = "card-price";
-      price.textContent = item.precio;
+      price.textContent = priceValue;
       header.appendChild(price);
     }
 

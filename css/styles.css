@@ -852,6 +852,18 @@ body.nav-open .nav-mobile {
   background: var(--surface);
 }
 
+.report-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.report-item {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1rem 1.2rem;
+}
+
 .footer {
   padding: 2.5rem 0;
   border-top: 1px solid var(--border);

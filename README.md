@@ -17,7 +17,7 @@ Este sitio carga datos desde Google Sheets y usa fallback local si falla.
 
 ### Paso 1: publicar la planilla
 - Abrí el Sheet y andá a `Archivo > Publicar en la web`.
-- Publicá toda la planilla o al menos las hojas `productos`, `servicios`, `estaticos`, `galeria`, `horario`, `sobre_tomi`, `venta`, `faq` y `animacion`.
+- Publicá toda la planilla o al menos las hojas `productos`, `servicios`, `estaticos`, `galeria`, `horario`, `sobre_tomi`, `venta`, `faq`, `animacion` y `seo`.
 
 ### Paso 2: URLs CSV recomendadas
 - Productos:
@@ -38,10 +38,12 @@ Este sitio carga datos desde Google Sheets y usa fallback local si falla.
   `https://docs.google.com/spreadsheets/d/{ID}/gviz/tq?tqx=out:csv&sheet=faq`
 - Animacion:
   `https://docs.google.com/spreadsheets/d/{ID}/gviz/tq?tqx=out:csv&sheet=animacion`
+- SEO:
+  `https://docs.google.com/spreadsheets/d/{ID}/gviz/tq?tqx=out:csv&sheet=seo`
 
 ### Paso 3: ID del Sheet y nombre de hojas
 - El ID actual está configurado en `js/main.js`.
-- Si usás `gid`, agregá el valor en `CONFIG.sheets.productos.gid`, `CONFIG.sheets.servicios.gid`, `CONFIG.sheets.estaticos.gid`, `CONFIG.sheets.galeria.gid`, `CONFIG.sheets.horario.gid`, `CONFIG.sheets.sobre_tomi.gid`, `CONFIG.sheets.venta.gid`, `CONFIG.sheets.faq.gid` o `CONFIG.sheets.animacion.gid`.
+- Si usás `gid`, agregá el valor en `CONFIG.sheets.productos.gid`, `CONFIG.sheets.servicios.gid`, `CONFIG.sheets.estaticos.gid`, `CONFIG.sheets.galeria.gid`, `CONFIG.sheets.horario.gid`, `CONFIG.sheets.sobre_tomi.gid`, `CONFIG.sheets.venta.gid`, `CONFIG.sheets.faq.gid`, `CONFIG.sheets.animacion.gid` o `CONFIG.sheets.seo.gid`.
 
 ## Formato flexible de datos
 - Productos: `nombre`, `descripcion`, `precio`, `imagen`, `categoria`.
@@ -53,6 +55,7 @@ Este sitio carga datos desde Google Sheets y usa fallback local si falla.
 - Venta: `elementos`.
 - FAQ: `pregunta`, `respuesta`.
 - Animacion: `animacion` (poner `si` para activar).
+- SEO: `seo`.
 
 Si falta algún campo, la UI sigue funcionando.
 

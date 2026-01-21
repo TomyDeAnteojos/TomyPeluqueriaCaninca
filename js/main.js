@@ -10,7 +10,8 @@
       sobre_tomi: { sheet: "sobre_tomi", gid: "" },
       venta: { sheet: "venta", gid: "" },
       faq: { sheet: "faq", gid: "" },
-      animacion: { sheet: "animacion", gid: "" }
+      animacion: { sheet: "animacion", gid: "" },
+      seo: { sheet: "seo", gid: "" }
     }
   };
 
@@ -20,6 +21,15 @@
       .trim()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function capitalizeWords(value) {
+    if (!value) {
+      return "";
+    }
+    return value.replace(/\S+/g, function (word) {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    });
   }
 
   function pickField(obj, names) {
@@ -35,11 +45,11 @@
 
   function normalizeItem(raw, type) {
     return {
-      nombre: pickField(raw, ["nombre", "name", "producto", "servicio"]) || "",
-      descripcion: pickField(raw, ["descripcion", "descripcioncorta", "detalle", "desc"]) || "",
+      nombre: capitalizeWords(pickField(raw, ["nombre", "name", "producto", "servicio"]) || ""),
+      descripcion: capitalizeWords(pickField(raw, ["descripcion", "descripcioncorta", "detalle", "desc"]) || ""),
       precio: pickField(raw, ["precio", "price", "valor"]) || "",
       imagen: pickField(raw, ["imagen", "image", "foto", "img"]) || "",
-      categoria: pickField(raw, ["categoria", "category", "tipo"]) || "",
+      categoria: capitalizeWords(pickField(raw, ["categoria", "category", "tipo"]) || ""),
       duracion: type === "servicio" ? pickField(raw, ["duracion", "duration", "tiempo"]) || "" : ""
     };
   }
@@ -47,7 +57,7 @@
   function normalizeStatic(raw) {
     return {
       imagen: pickField(raw, ["imagen", "image", "foto", "img"]) || "",
-      texto: pickField(raw, ["texto", "titulo", "label", "alt"]) || ""
+      texto: capitalizeWords(pickField(raw, ["texto", "titulo", "label", "alt"]) || "")
     };
   }
 
@@ -102,7 +112,7 @@
       });
       return data.map(function (raw) {
         return {
-          titulo: pickField(raw, ["titulo", "titulo", "title", "nombre"]) || "",
+          titulo: capitalizeWords(pickField(raw, ["titulo", "titulo", "title", "nombre"]) || ""),
           archivo: pickField(raw, ["archivo", "file", "url", "link", "media"]) || ""
         };
       });
@@ -149,7 +159,7 @@
         gid: sheetConfig.gid
       });
       var item = data[0] || {};
-      return pickField(item, ["descripcion", "texto", "contenido"]) || "";
+      return capitalizeWords(pickField(item, ["descripcion", "texto", "contenido"]) || "");
     } catch (err) {
       try {
         var res = await fetch("data/sobre_tomi.json");
@@ -171,7 +181,7 @@
       });
       return data
         .map(function (item) {
-          return pickField(item, ["elementos", "elemento", "item", "nombre"]);
+          return capitalizeWords(pickField(item, ["elementos", "elemento", "item", "nombre"]) || "");
         })
         .filter(Boolean);
     } catch (err) {
@@ -196,8 +206,8 @@
       return data
         .map(function (item) {
           return {
-            pregunta: pickField(item, ["pregunta", "question", "q"]) || "",
-            respuesta: pickField(item, ["respuesta", "answer", "a"]) || ""
+            pregunta: capitalizeWords(pickField(item, ["pregunta", "question", "q"]) || ""),
+            respuesta: capitalizeWords(pickField(item, ["respuesta", "answer", "a"]) || "")
           };
         })
         .filter(function (item) {
@@ -214,7 +224,23 @@
     }
   }
 
-  async function loadAnimacion() {
+  
+  async function loadSeo() {
+    var sheetConfig = CONFIG.sheets.seo;
+    try {
+      var data = await window.Sheets.fetchSheetCSV({
+        spreadsheetId: CONFIG.spreadsheetId,
+        sheet: sheetConfig.sheet,
+        gid: sheetConfig.gid
+      });
+      var item = data[0] || {};
+      return pickField(item, ["seo", "descripcion", "texto"]) || "";
+    } catch (err) {
+      return "";
+    }
+  }
+
+async function loadAnimacion() {
     var sheetConfig = CONFIG.sheets.animacion;
     try {
       var data = await window.Sheets.fetchSheetCSV({
@@ -428,6 +454,37 @@
         faqList.parentElement.style.display = "none";
       }
     }
+    if (faqItems.length) {
+      var faqSchemaItems = faqItems
+        .filter(function (item) {
+          return item.pregunta && item.respuesta;
+        })
+        .slice(0, 6)
+        .map(function (item) {
+          return {
+            "@type": "Question",
+            "name": item.pregunta,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": item.respuesta
+            }
+          };
+        });
+      if (faqSchemaItems.length) {
+        var script = document.querySelector("#faq-schema");
+        if (!script) {
+          script = document.createElement("script");
+          script.type = "application/ld+json";
+          script.id = "faq-schema";
+          document.head.appendChild(script);
+        }
+        script.textContent = JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": faqSchemaItems
+        });
+      }
+    }
 
     var horario = await loadHorario();
     if (horarioInicio && horario.inicio) {
@@ -563,6 +620,20 @@
     setupThemeToggle();
     setupMobileNav();
     setupGeneralWhatsApp();
+
+    loadSeo().then(function (seoText) {
+      if (!seoText) {
+        return;
+      }
+      var description = document.querySelector('meta[name="description"]');
+      if (description) {
+        description.setAttribute("content", seoText);
+      }
+      var ogDescription = document.querySelector('meta[property="og:description"]');
+      if (ogDescription) {
+        ogDescription.setAttribute("content", seoText);
+      }
+    });
     loadAnimacion().then(function (enabled) {
       if (!enabled) {
         return;
